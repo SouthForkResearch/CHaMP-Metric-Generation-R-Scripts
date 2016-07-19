@@ -10,6 +10,7 @@ all.data  = all.data[all.data$SubstrateSizeClass !="2048 - 2896mm" ,]
 all.data  = all.data[all.data$SubstrateSizeClass != "2896 - 4000mm"  ,]
 all.data  = all.data[all.data$SubstrateSizeClass != "512 - 724mm",]
 all.data  = all.data[all.data$SubstrateSizeClass !=  "724 - 1024mm",]
+all.data  = all.data[all.data$SubstrateSizeClass != "1024 - 1448mm",]
 all.data  = all.data[all.data$SubstrateSizeClass != "Bedrock",]
 
 
