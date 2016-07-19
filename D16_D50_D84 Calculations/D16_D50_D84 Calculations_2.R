@@ -4,9 +4,24 @@
 all.data = read.csv("SubstrateSizeClass_All_20160718.txt", header=T)
 all.data = all.data[all.data$VisitYear != 2011,]
 
+all.data  = all.data[all.data$SubstrateSizeClass != ">4000mm",]
+all.data  = all.data[all.data$SubstrateSizeClass !="1448 - 2048mm" ,]
+all.data  = all.data[all.data$SubstrateSizeClass !="2048 - 2896mm" ,]
+all.data  = all.data[all.data$SubstrateSizeClass != "2896 - 4000mm"  ,]
+all.data  = all.data[all.data$SubstrateSizeClass != "512 - 724mm",]
+all.data  = all.data[all.data$SubstrateSizeClass !=  "724 - 1024mm",]
+all.data  = all.data[all.data$SubstrateSizeClass != "Bedrock",]
+
+
+
+
+levels(all.data$SubstrateSizeClass)
+
 # enumerate all VisitID's, then we'll walk through them one at a time.
 VisitIDs = levels(factor(all.data$VisitID))
 n = length(VisitIDs)
+
+all.data[is.na(all.data$SubstrateMeasurement) == F,]
 
 
 # Initialize results dataframe
@@ -51,8 +66,8 @@ nrow(data)
 	upper.bound = as.numeric(upper.bound)
 	data.frame(data$SubstrateSizeClass, lower.bound, upper.bound)
 
-ln.lower.bound = log(sort(lower.bound))
-ln.upper.bound = log(sort(upper.bound))
+ln.lower.bound = log(100*sort(lower.bound))
+ln.upper.bound = log(100*sort(upper.bound))
 
 
 SubstrateSizeClass = data$SubstrateSizeClass[order(lower.bound)]
@@ -96,17 +111,17 @@ exp(A)
 		idx = trunc(.16*nrow(ord.data))
             idx
 		logD16 = A[idx] + (A[idx+1]- A[idx]) * ((.16-Pct[idx])/(Pct[idx+1]-Pct[idx]))
-		D16 = exp(logD16)
+		D16 = exp(logD16)/100
             D16
 	# D50
 		idx = trunc(.5*nrow(ord.data))
 		logD50 = A[idx] + (A[idx+1]- A[idx]) * ((.5-Pct[idx])/(Pct[idx+1]-Pct[idx]))
-		D50 = exp(logD50)-1
+		D50 = exp(logD50)/100
 
 	# D84
 		idx = trunc(.84*nrow(ord.data))
 		logD84 = A[idx] + (A[idx+1]- A[idx]) * ((.84-Pct[idx])/(Pct[idx+1]-Pct[idx]))
-		D84 = exp(logD84)-1
+		D84 = exp(logD84)/100
 
 	# Assign results to dataframe	
 		results$VisitID[v] = data$VisitID[1]
@@ -134,16 +149,16 @@ plot(results$D84, results$D84_cm.org)
 
 mod16=lm(results$D16 ~ results$D16_cm.org)
 summary(mod16)
-R-squared = .9805
+#R-squared = .9805
 
 
 mod50=lm(results$D50 ~ results$D50_cm.org)
 summary(mod50)
-R-squared = .9471
+#R-squared = .9471
 
 mod84=lm(results$D84 ~ results$D84_cm.org)
 summary(mod84)
-R-squared = .915
+#R-squared = .915
 
 
 
