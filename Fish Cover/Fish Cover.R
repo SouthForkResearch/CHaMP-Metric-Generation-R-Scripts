@@ -8,14 +8,19 @@
 
 #Load the fish cover data (exported from "All Measurements" database, Fish Cover Table.
 FC_data = read.csv("FishCover.csv", header=T)
-#FC_data$VisitID_CU = paste(FC_data$VisitID, FC_data$ChannelUnitID)
+# Need VisidID_CU to merge data with channel unit data
+FC_data$VisitID_CU = paste(FC_data$VisitID, FC_data$ChannelUnitID)
 
 # Load the channel unit data from the channel unit summary tab of the "Program Metrics" database
 CU_data = read.csv("ChannelUnitSummary.csv", header=T)
-#CU_data$VisitID_CU = paste(CU_data$VisitID, CU_data$ChUnitID)
+# Need VisidID_CU to merge data with fish cover data
+CU_data$VisitID_CU = paste(CU_data$VisitID, CU_data$ChUnitID)
 
+nrow(FC_data)
+nrow(CU_data)
 # Merge the data
 M_data=merge(CU_data, FC_data)
+nrow(M_data)
 
 # Remove data if AreaTotal is NA
 M_data = M_data[is.na(M_data$AreaTotal)==F,]
@@ -34,19 +39,22 @@ FishCovTotal = rep(NA, length(VisitIDs))
 Valid = rep(NA, length(VisitIDs))
 
 
+VisitID=1
+
 # Cycle through visit IDs
 for (i in 1:length(VisitIDs)){
 VisitID=VisitIDs[i]
 
 # subset data to just a single VisitID
 data = M_data[M_data$VisitID == VisitID,]
-
+data
 # Figure out fraction area in each channel unit
 Area_Pct_by_CU = data$AreaTotal / sum(data$AreaTotal, na.rm=T)
+Area_Pct_by_CU
 
 # Fund minimu of SumFishCover.  Criteria is that it must be greater than
 # or equal to 90% for a valid metric
-MinSFC = min(data$SumFishCover)
+MinSFC = min(data$SumFishCover, na.rm=T)
 
 # Assign metric as valid or invalid
 Valid[i]="Yes"
