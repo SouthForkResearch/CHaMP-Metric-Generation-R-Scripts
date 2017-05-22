@@ -32,19 +32,19 @@ RipCovBigTree[i]
 ###################################
 # RipCovConif
 # Method for Year = 2011; although this doesn't agree with results.cm.org
-if (Vdata$VisitYear[1]==2011) {
-RipCovConif[i]=
-mean(c((0.5*(Vdata$LBCanopyVegetationType=="Mixed")+ 1*(Vdata$LBCanopyVegetationType=="Coniferous")),
-       (0.5*(Vdata$LBUnderstoryVegetationType=="Mixed")+ 1*(Vdata$LBUnderstoryVegetationType=="Coniferous")),
-       (0.5*(Vdata$RBCanopyVegetationType=="Mixed")+ 1*(Vdata$RBCanopyVegetationType=="Coniferous")),
-       (0.5*(Vdata$RBUnderstoryVegetationType=="Mixed")+ 1*(Vdata$RBUnderstoryVegetationType=="Coniferous"))
-))*100
-} else {
+#if (Vdata$VisitYear[1]==2011) {
+#RipCovConif[i]=
+#mean(c((0.5*(Vdata$LBCanopyVegetationType=="Mixed")+ 1*(Vdata$LBCanopyVegetationType=="Coniferous")),
+#       (0.5*(Vdata$LBUnderstoryVegetationType=="Mixed")+ 1*(Vdata$LBUnderstoryVegetationType=="Coniferous")),
+#       (0.5*(Vdata$RBCanopyVegetationType=="Mixed")+ 1*(Vdata$RBCanopyVegetationType=="Coniferous")),
+#       (0.5*(Vdata$RBUnderstoryVegetationType=="Mixed")+ 1*(Vdata$RBUnderstoryVegetationType=="Coniferous"))
+#))*100
+#} else {
 # Here's how it's done if Year > 2011
 LB=tapply((Vdata$LBCanopyWoodyConiferous+Vdata$LBUnderstoryWoodyConiferous),Vdata$TransectID,mean)
 RB=tapply((Vdata$RBCanopyWoodyConiferous+Vdata$RBUnderstoryWoodyConiferous),Vdata$TransectID,mean)
 RipCovConif[i]=mean(c(LB,RB))
-}
+#}
 
 RipCovConif[i]
 
@@ -95,3 +95,35 @@ results = data.frame("VisitID"=VisitIDs,RipCovBigTree,RipCovConif,RipCovGrnd,Rip
 RipCovUstory,RipCovWood,RipCovCanNone)
 
 write.csv(results, "RiparianCover.csv", row.names=F)
+
+MVI = read.csv("MetricVisitInformation.csv", header=T)
+idx = match(results$VisitID, MVI$VisitID)
+
+plot(results$RipCovBigTree, MVI$RipCovBigTree[idx],
+xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
+RipCovBigTree: R-script vs CM.org value")
+
+plot(results$RipCovConif, MVI$RipCovConif[idx],
+xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
+RipCovConif: R-script vs CM.org value")
+
+plot(results$RipCovGrnd, MVI$RipCovGrnd[idx],
+xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
+RipCovGrnd: R-script vs CM.org value")
+
+plot(results$RipCovNonWood, MVI$RipCovNonWood[idx],
+xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
+RipCovNonWood: R-script vs CM.org value")
+
+plot(results$RipCovUstory, MVI$RipCovUstory[idx],
+xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
+RipCovUstory: R-script vs CM.org value")
+
+plot(results$RipCovWood, MVI$RipCovWood[idx],
+xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
+RipCovWood: R-script vs CM.org value")
+
+plot(results$RipCovCanNone, MVI$RipCovCanNone[idx],
+xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
+RipCovCanNone: R-script vs CM.org value")
+

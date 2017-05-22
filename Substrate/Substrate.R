@@ -46,7 +46,9 @@ VisitID=VisitIDs[i]
 
 # subset data to just a single VisitID
 data = M_data[M_data$VisitID == VisitID,]
-data
+
+# eliminate data from channel units with SumSubstrateCover less than 90$
+data = data[data$SumSubstrateCover > 89.9999,]
 # Figure out fraction area in each channel unit
 
 Area_Pct_by_CU = data$AreaTotal / sum(data$AreaTotal, na.rm=T)
@@ -84,3 +86,29 @@ print(paste(i,"of",length(VisitIDs)))
 # Write the results to a .csv file
 write.csv(data.frame("VisitID"=VisitIDs, Valid,
    SubEstBldr, SubEstCbl, SubEstGrvl, SubEstSandFines),"Substrate_SiteMetrics.csv",row.names=F)
+
+results = data.frame("VisitID"=VisitIDs, Valid,
+   SubEstBldr, SubEstCbl, SubEstGrvl, SubEstSandFines)
+
+MVI = read.csv("MetricVisitInformation.csv", header=T)
+
+idx = match(results$VisitID, MVI$VisitID)
+idx
+
+windows(record=T)
+plot(results$SubEstBldr, MVI$SubEstBldr[idx], xlab="R-Script",
+ylab="cm.org", main="Substrate Script Validation: 
+SubEstBldr: R-script vs CM.org value")
+
+plot(results$SubEstCbl, MVI$SubEstCbl[idx], xlab="R-Script",
+ylab="cm.org", main="Substrate Script Validation: 
+SubEstCbl: R-script vs CM.org value")
+
+plot(results$SubEstGrvl, MVI$SubEstGrvl[idx], xlab="R-Script",
+ylab="cm.org", main="Substrate Script Validation: 
+SubEstGrvl: R-script vs CM.org value")
+
+plot(results$SubEstSandFines, MVI$SubEstSandFines[idx], xlab="R-Script",
+ylab="cm.org", main="Substrate Script Validation: 
+SubEstSandFines: R-script vs CM.org value")
+

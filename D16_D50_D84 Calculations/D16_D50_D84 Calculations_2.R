@@ -144,9 +144,9 @@ results$D50_cm.org = cm.org$SubD50[idx]
 results$D84_cm.org = cm.org$SubD84[idx]
 
 results$D16_cm.org
-plot(results$D16, results$D16_cm.org)
-plot(results$D50, results$D50_cm.org)
-plot(results$D84, results$D84_cm.org)
+plot(results$D16, results$D16_cm.org,xlab="R Code", ylab="cm.org",main="D16 R-Code vs CHaMP Monitoring.org Value")
+plot(results$D50, results$D50_cm.org,xlab="R Code", ylab="cm.org",main="D50 R-Code vs CHaMP Monitoring.org Value")
+plot(results$D84, results$D84_cm.org,xlab="R Code", ylab="cm.org",main="D84 R-Code vs CHaMP Monitoring.org Value")
 
 mod16=lm(results$D16 ~ results$D16_cm.org)
 summary(mod16)

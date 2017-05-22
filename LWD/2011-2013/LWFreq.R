@@ -67,3 +67,14 @@ LWFreq_Bf[is.na(LWFreq_Bf)] = 0
 
 results = data.frame("VisitID"=VisitIDs, LWFreq_Wet, LWFreq_Bf)
 write.csv(results, "LWFreq.csv", row.names=F)
+
+
+idx = match(results$VisitID, MVI$VisitID)
+idx
+plot(results$LWFreq_Wet, MVI$LWFreq_Wet[idx], xlab="R-Script",
+ylab="cm.org", main="LWFreq_Wet Script 2011-2013 Validation: 
+LWFreq_Wet: R-script vs CM.org value")
+
+plot(results$LWFreq_Bf, MVI$LWFreq_Bf[idx], xlab="R-Script",
+ylab="cm.org", main="LWFreq_Bf Script 2011-2013 Validation: 
+LWFreq_Bf: R-script vs CM.org value")
