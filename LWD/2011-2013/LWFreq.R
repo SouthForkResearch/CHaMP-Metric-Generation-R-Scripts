@@ -49,16 +49,14 @@ LWD_Wet_sum = sum(LWD_ID_Wet$SumLWDCount)
 
 idx = match(VisitIDs[i], MVI$VisitID)
 # Here's what is says in the documentation
-SiteLengthBankfull = MVI$Lgth_Bf[idx]
+#SiteLengthBankfull = MVI$Lgth_Bf[idx]
 # Here's what works
-SiteLengthBankfull = MVI$Lgth_Wet[idx]
+SiteLengthWetted = MVI$Lgth_Wet[idx]
 
 
 # Documentation says to round off, actual results are not rounded off.
-#LWFreq_Wet[i]=round(100*LWD_Wet_sum/SiteLengthBankfull,3)
-LWFreq_Wet[i]=100*LWD_Wet_sum/SiteLengthBankfull
-#LWFreq_Bf[i]=round(100*((LWD_Dry_sum + LWD_Wet_sum)/SiteLengthBankfull),3)
-LWFreq_Bf[i]=100*((LWD_Dry_sum + LWD_Wet_sum)/SiteLengthBankfull)
+LWFreq_Wet[i]=100*LWD_Wet_sum/SiteLengthWetted
+LWFreq_Bf[i]=100*((LWD_Dry_sum + LWD_Wet_sum)/SiteLengthWetted)
 
 }
 
