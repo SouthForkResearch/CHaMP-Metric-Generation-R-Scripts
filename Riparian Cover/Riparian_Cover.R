@@ -94,11 +94,19 @@ RipCovCanNone[i]
 results = data.frame("VisitID"=VisitIDs,RipCovBigTree,RipCovConif,RipCovGrnd,RipCovNonWood,
 RipCovUstory,RipCovWood,RipCovCanNone)
 
+names(results)
+
 write.csv(results, "RiparianCover.csv", row.names=F)
 
 MVI = read.csv("MetricVisitInformation.csv", header=T)
 idx = match(results$VisitID, MVI$VisitID)
+idx
 
+results
+levels(factor(MVI$VisitYear[idx]))
+results$Year = MVI$VisitYear[idx]
+
+results[results$Year ==2011,]
 plot(results$RipCovBigTree, MVI$RipCovBigTree[idx],
 xlab="R-Script",ylab="cm.org", main="Riparian Cover Script 2014-2016 Validation: 
 RipCovBigTree: R-script vs CM.org value")
