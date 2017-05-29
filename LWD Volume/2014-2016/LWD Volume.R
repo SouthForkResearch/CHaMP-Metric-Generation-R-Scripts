@@ -93,12 +93,20 @@ idx = match(VisitIDs, MVI$VisitID)
 idx
 
 LWVol_BfFstNT
-plot(results$LWVol_Wet,MVI$LWVol_Wet[idx])
+plot(results$LWVol_Wet,MVI$LWVol_Wet[idx],
+xlab="computed value", ylab="cm.org value",
+main = "LWVol_Wetted: Computed vs cm.org Value")
+
 plot(results$LWVol_Bf,MVI$LWVol_Bf[idx])
 plot(results$LWVol_BfFstNT,MVI$LWVol_BfFstNT[idx])
 plot(results$LWVol_WetFstNT,MVI$LWVol_WetFstNT[idx])
 
-plot(results$LWVol_BfFstTurb,MVI$LWVol_BfFstTurb[idx])
+plot(results$LWVol_BfFstTurb,MVI$LWVol_BfFstTurb[idx],
+xlab="computed value", ylab="cm.org value",
+main = "LWVol_Bankfull: Computed vs cm.org Value")
+
+
+
 plot(results$LWVol_WetFstTurb,MVI$LWVol_WetFstTurb[idx])
 
 plot(results$LWVol_BfSlow,MVI$LWVol_BfSlow[idx])
