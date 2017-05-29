@@ -101,11 +101,6 @@ MVI = read.csv("MetricVisitInformation.csv", header=T)
 idx = match(results$VisitID, MVI$VisitID)
 idx
 
-write.csv(data.frame(results$LWVol_Wet== MVI$LWVol_Wet[idx],MVI[idx,]), "test.csv")
-
-#data.frame(MVI$VisitID[idx],results$LWVol_Wet, MVI$LWVol_Wet[idx])
-#data.frame(MVI$VisitID[idx],results$LWVol_Wet, MVI$LWVol_Wet[idx],results$LWVol_Wet== MVI$LWVol_Wet[idx])
-
 
 plot(results$LWVol_Wet, MVI$LWVol_Wet[idx], xlab="R-Script",
 ylab="cm.org", main="LWVol Script 2011-2013 Validation: 
@@ -114,6 +109,4 @@ LWVol_Wet: R-script vs CM.org value")
 plot(results$LWVol_Bf, MVI$LWVol_Bf[idx], xlab="R-Script",
 ylab="cm.org", main="LWVol_Bf Script 2011-2013 Validation: 
 LWVol_Bf: R-script vs CM.org value")
-
- 0.23069  -          0.25104
 
